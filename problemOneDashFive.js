@@ -9,35 +9,33 @@ Change the course and its parts into a single Javascript object. Fix everything 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = (props) => {
+const Header = ({ course: { name } }) => {
     return (
         <div className="header">
-            <h1>{props.course.name}</h1>
+            <h1>{name}</h1>
         </div>
     );
 }
 
-const Part = (props) => {
+const Part = ({ name, exercises }) => (
 
-    return <p>{props.name} {props.exercises}</p>;
-}
+    <p>{name} {exercises}</p>
+);
 
-const Content = (props) => {
-    let partOne = props.course.parts[0];
-    let partTwo = props.course.parts[1];
-    let partThree = props.course.parts[2];
+const Content = ({ course: { parts } }) => {
+    //we are destructing only parts
     return (
         <div className="body">
-            <Part name={partOne.name} exercises={partOne.exercises} />
-            <Part name={partTwo.name} exercises={partTwo.exercises} />
-            <Part name={partThree.name} exercises={partThree.exercises} />
+            <Part name={parts[0].name} exercises={parts[0].exercises} />
+            <Part name={parts[1].name} exercises={parts[1].exercises} />
+            <Part name={parts[2].name} exercises={parts[2].exercises} />
         </div>
     );
 }
 
-const Total = (props) => {
+const Total = ({ course: { parts } }) => {
     let total = 0;
-    let parts = props.course.parts;
+
     parts.forEach((part) => {
         total += part.exercises;
     });
@@ -78,6 +76,4 @@ const App = () => {
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-
 
